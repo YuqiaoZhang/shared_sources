@@ -529,6 +529,7 @@ public:
   void enqueue(VkCommandBuffer cmdbuffer);
   void enqueueSignal(VkSemaphore sem);
   void enqueueWait(VkSemaphore sem, VkPipelineStageFlags flag);
+  bool hasWaitSem(VkSemaphore sem);
 #ifdef VULKAN_HPP
   void enqueue(uint32_t num, const vk::CommandBuffer* cmdbuffers) { enqueue(num, (const VkCommandBuffer*)cmdbuffers); }
   void enqueueWait(vk::Semaphore sem, vk::PipelineStageFlags flag) { enqueueWait(sem, (VkPipelineStageFlags)flag); }

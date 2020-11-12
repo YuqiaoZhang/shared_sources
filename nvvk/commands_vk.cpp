@@ -388,6 +388,11 @@ void BatchSubmission::enqueueWait(VkSemaphore sem, VkPipelineStageFlags flag)
   m_waitFlags.push_back(flag);
 }
 
+bool BatchSubmission::hasWaitSem(VkSemaphore sem)
+{
+  return (std::find_if_not(m_waits.begin(), m_waits.end(), [sem](VkSemaphore value) -> bool { return value != sem; }) != m_waits.end());
+}
+
 VkResult BatchSubmission::execute(VkFence fence /*= nullptr*/, uint32_t deviceMask)
 {
   VkResult res = VK_SUCCESS;

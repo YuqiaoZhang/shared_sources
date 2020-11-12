@@ -31,6 +31,7 @@
 #include <iterator>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <vulkan/vulkan.h>
 
 namespace nvvk {
@@ -277,7 +278,12 @@ struct GraphicsPipelineState
   uint32_t addDynamicStateEnable(VkDynamicState dynamicState)
 #endif
   {
-    dynamicStateEnables.push_back(dynamicState);
+    auto result = std::find_if_not(dynamicStateEnables.begin(), dynamicStateEnables.end(), [dynamicState](VkDynamicState const &value) -> bool { return value != dynamicState; });
+    if (result == dynamicStateEnables.end())
+    {
+      dynamicStateEnables.push_back(dynamicState);
+    }
+
     return (uint32_t)(dynamicStateEnables.size() - 1);
   }
 
